@@ -46,6 +46,7 @@
 
 // Set page that photo browser starts on
 - (void)setInitialPageIndex:(NSUInteger)index;
+- (NSUInteger)currentPageIndex;
 
 @end
 
