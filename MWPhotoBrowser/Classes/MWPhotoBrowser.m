@@ -159,6 +159,8 @@ navigationBarBackgroundImageLandscapePhone = _navigationBarBackgroundImageLandsc
         _displayActionButton = NO;
         _didSavePreviousStateOfNavBar = NO;
         
+        _displayNavigation = YES;
+        
         // Listen for MWPhoto notifications
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(handleMWPhotoLoadingDidEndNotification:)
@@ -274,6 +276,9 @@ navigationBarBackgroundImageLandscapePhone = _navigationBarBackgroundImageLandsc
     // Toolbar
     if (numberOfPhotos > 1 || _displayActionButton) {
         [self.view addSubview:_toolbar];
+        if (!_displayNavigation) {
+            [_toolbar removeFromSuperview];
+        }
     } else {
         [_toolbar removeFromSuperview];
     }
@@ -369,8 +374,11 @@ navigationBarBackgroundImageLandscapePhone = _navigationBarBackgroundImageLandsc
     [self setNavBarAppearance:animated];
     
     // Update UI
-	[self hideControlsAfterDelay];
-    
+    if (_displayNavigation) {
+	    [self hideControlsAfterDelay];
+    } else {
+        [self setControlsHidden:YES animated:NO permanent:YES];
+    }    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
